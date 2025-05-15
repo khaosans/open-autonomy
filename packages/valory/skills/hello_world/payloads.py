@@ -28,7 +28,7 @@ class DummyPayload(BaseTxPayload):
     """Represent a transaction payload for the dummy skill."""
 
     def __init__(self, sender: str, content: str) -> None:
-        """Initialize a 'select_keeper' payload."""
+        """Initialize a 'dummy' payload."""
         super().__init__(sender)
         self._content = content
 
@@ -46,16 +46,6 @@ class DummyPayload(BaseTxPayload):
     def from_json(cls, obj: Dict) -> "DummyPayload":
         """From json."""
         return cls(sender=obj["sender"], content=obj["content"])
-        return cls(sender=obj["sender"], content=obj["content"])
-
-    def __hash__(self) -> int:
-        """Get the hash."""
-        return hash(self.sender + self.content)
-
-    @property
-    def values(self) -> Tuple[str]:
-        """Get the values."""
-        return (self.content,)
 
     def __hash__(self) -> int:
         """Get the hash."""
