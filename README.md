@@ -47,6 +47,38 @@ smart contracts provide, making it possible to execute **arbitrarily complex ope
 (such as machine-learning algorithms). Most importantly, agent services are
 **decentralized**, **trust-minimized**, **transparent**, and **robust**.
 
+# Open Autonomy Framework
+
+The Open Autonomy Framework is a Python-based framework for building autonomous agents and applications.
+
+## Features
+- Modular design
+- Support for ABCI applications
+- Easy-to-use testing framework
+
+## Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:khaosans/open-autonomy.git
+   cd open-autonomy
+   ```
+
+2. Set up a virtual environment:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run tests:
+   ```bash
+   pytest
+   ```
 
 ## Get started developing agent services
 
@@ -95,6 +127,9 @@ the dependencies:
 - Fetch packages:
 
       autonomy packages sync --update-packages
+
+## License
+This project is licensed under the Apache 2.0 License.
 
 ## Cite
 
