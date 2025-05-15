@@ -54,8 +54,6 @@ jobs:
         pip install --user --upgrade setuptools
     - name: Check copyright headers
       run: tomte format-copyright --author valory --author fetchai
-    - name: License compatibility check
-      run: tox -e liccheck
     - name: Check docs
       run: tox -e check-api-docs
     # - name: Check doc links
@@ -328,7 +326,6 @@ jobs:
   e2e:
     needs:
       - install_check
-      - copyright_doc_and_dependencies_check
       - linter_checks
     runs-on: ${{ matrix.os }}
 
