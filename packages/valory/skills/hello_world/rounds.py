@@ -95,6 +95,32 @@ class PrintCountRound(CollectSameUntilThresholdRound):
         return self.synchronized_data.update(print_count=updated_count)
 
 
+class GreetWorldPayload(BaseTxPayload):
+    """Payload for greeting the world."""
+
+    def __init__(self, sender: str, message: str) -> None:
+        """Initialize payload."""
+        super().__init__(sender)
+        self._message = message
+
+    @property
+    def message(self) -> str:
+        """Get the greeting message."""
+        return self._message
+
+
+class GreetWorldRound(CollectSameUntilThresholdRound):
+    """Round to perform a greeting action."""
+
+    payload_class = GreetWorldPayload
+    synchronized_data_class = SynchronizedData
+
+    def end_block(self) -> BaseSynchronizedData:
+        """Log the greeting message and proceed."""
+        print("Hello, World!")  # Example action
+        return self.synchronized_data
+
+
 class HelloWorldAbciApp(AbciApp[Event]):
     """HelloWorldAbciApp
 
@@ -106,6 +132,8 @@ class HelloWorldAbciApp(AbciApp[Event]):
         0. DummyRound
             - done: 1. PrintCountRound
         1. PrintCountRound
+            - done: 2. GreetWorldRound
+        2. GreetWorldRound
             - done: 0. DummyRound
 
     Final states: {}
@@ -118,7 +146,8 @@ class HelloWorldAbciApp(AbciApp[Event]):
     initial_round_cls: Type[AbstractRound] = DummyRound
     transition_function: AbciAppTransitionFunction = {
         DummyRound: {Event.DONE: PrintCountRound},
-        PrintCountRound: {Event.DONE: DummyRound},
+        PrintCountRound: {Event.DONE: GreetWorldRound},
+        GreetWorldRound: {Event.DONE: DummyRound},
     }
     event_to_timeout: Dict[Event, float] = {
         Event.ROUND_TIMEOUT: 30.0,
