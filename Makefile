@@ -72,14 +72,11 @@ generators: clean-cache
 common-checks-1:
 	tox -p -e check-copyright -e check-hash -e check-packages
 
+# Run documentation checks
 .PHONY: common-checks-2
 common-checks-2:
-	tox -e check-api-docs
-	tox -e check-abci-docstrings
-	tox -e check-abciapp-specs
-	tox -e check-handlers
-	tox -e check-dialogues
-	tox -e check-doc-links-hashes
+	pytest --doctest-modules
+	pydocstyle .
 
 .PHONY: docs
 docs:
@@ -250,4 +247,16 @@ build-proto:
 		packages/valory/connections/abci/protos/tendermint/types/types.proto \
 		packages/valory/connections/abci/protos/tendermint/types/validator.proto \
 		packages/valory/connections/abci/protos/tendermint/types/params.proto \
-		packages/valory/connections/abci/protos/tendermint/version/types.proto 
+		packages/valory/connections/abci/protos/tendermint/version/types.proto
+
+# Format code using black and isort
+.PHONY: formatters
+formatters:
+	black .
+	isort .
+
+# Run static analysis tools
+.PHONY: code-checks
+code-checks:
+	mypy .
+	darglint .
